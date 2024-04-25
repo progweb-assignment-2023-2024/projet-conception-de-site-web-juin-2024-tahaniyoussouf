@@ -22,6 +22,14 @@
             }
         ];
 
+        document.getElementById("pseudoForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Empêche le rechargement de la page
+    
+            const pseudoInput = document.getElementById("pseudoInput");
+            const pseudoValue = pseudoInput.value; // Récupère la valeur saisie dans le champ pseudo
+        });
+
+
         let currentQuestion = 0; // suivre la question actuelle.
         let score = 0; // suivre le score.
         let timeLeft = 5; // Countdown temps en seconds
@@ -80,7 +88,7 @@
         // Fonction pour afficher le score final.
         function displayScore() {
             const scoreElement = document.getElementById("score");
-            scoreElement.textContent = `Your score: ${score}/${quiz.length}`;
+            scoreElement.textContent = `Your score:${pseudoValue} ${score}/${quiz.length}`;
         }
 
         // fonction pour lancer le quiz.
