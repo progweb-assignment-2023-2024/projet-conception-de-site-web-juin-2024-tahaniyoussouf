@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="assets/css/index.css">
+    <script src="./js/script.js"></script>
 </head>
 <body>
     <h1 >Bienvenue !</h1>
@@ -19,13 +20,4 @@
     </form>
     <p>Vous avez 5 seconds à répondre pour chaque question . Bonne chance !</p>
 </body>
-<script>
-    function storeData() {
-        let name = document.getElementById('nom').value;
-        let prenom = document.getElementById('prenom').value;
-        localStorage.setItem('nom', name);
-        localStorage.setItem('prenom', prenom);
-        return true;
-    }
-</script>
 </html>
