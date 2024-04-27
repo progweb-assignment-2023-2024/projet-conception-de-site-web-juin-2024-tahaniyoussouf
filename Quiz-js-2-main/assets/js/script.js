@@ -101,3 +101,10 @@ function displayScore() {
     const scoreElement = document.getElementById("score");
     scoreElement.textContent =`${name} ${prenom} votre score : ${score}/${quiz.length}`;
 }
+function storeData() {
+    let name = document.getElementById('nom').value;
+    let prenom = document.getElementById('prenom').value;
+    localStorage.setItem('nom', name);
+    localStorage.setItem('prenom', prenom);
+    return true;
+}
