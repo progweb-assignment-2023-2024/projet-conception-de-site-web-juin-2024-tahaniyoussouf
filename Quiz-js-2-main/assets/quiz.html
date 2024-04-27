@@ -3,17 +3,22 @@
 <head>
     <title>Quiz</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="./js/script.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Quiz</h1>
-        <div id="question"></div>
+
+    <div class="quiz-container">
+        <h1 id="question"></h1>
         <div id="options"></div>
         <div id="score"></div>
-        <div id="countdown"></div>
+        <p id="countdown">Temps restant : <span id="timer">5</span> secondes</p>
     </div>
+    
+    <!-- Modal pour afficher les réponses -->
+    <div class="modal" id="modal">
+        <div class="modal-content" id="modal-content"></div>
+    </div>
+    
 
-
-    <script src="js/script.js"></script>
-</body>
+    </body>
 </html>
