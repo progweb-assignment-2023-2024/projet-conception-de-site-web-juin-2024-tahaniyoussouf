@@ -1,94 +1,103 @@
-    // Define the quiz questions and answers
-        const quiz = [
-            {
-                question: "C'est quoi la capitale de la France?",
-                options: ["Paris", "London", "Berlin", "Rome"],
-                answer: "Paris"
-            },
-            {
-                question: "laquelle parmis ces ville est pas une capitale?",
-                options: ["Liège", "Brussel", "Madrid", "Amestrdam"],
-                answer: "Liège"
-            },
-            {
-                question: "laquelle parmis ces ville est une capital?",
-                options: ["Marakech", "Bercelona", "Berlin", "Lyon"],
-                answer: "Berlin"
-            },
-            {
-                question: "Podabest est la capital de quel pays?",
-                options: ["Algerie", "Tchad", "Belgique", "Hongarie"],
-                answer: "Hongarie"
-            }
-        ];
+// Définition des questions et réponses du quiz
+const quiz = [
+    {
+        question: "Quelle est la capitale de la France ?",
+        options: ["Paris", "Londres", "Berlin", "Rome"],
+        answer: "Paris"
+    },
+    {
+        question: "Quelle ville n'est pas une capitale ?",
+        options: ["Liège", "Bruxelles", "Madrid", "Amsterdam"],
+        answer: "Liège"
+    },
+    {
+        question: "Quelle ville est une capitale ?",
+        options: ["Marrakech", "Barcelone", "Berlin", "Lyon"],
+        answer: "Berlin"
+    },
+    {
+        question: "Podapst est la capital de quel pays?",
+        options: ["Algérie", "Tchad", "Belgique", "Hongrie"],
+        answer: "Hongrie"
+    }
+];
 
-        let currentQuestion = 0; // variable pour la question acctuelle.
-        let score = 0; // variable pour le score.
-        let timeLeft = 5; // variable pour le countdown
+let currentQuestion = 0; // Question actuelle
+let score = 0; // Score du joueur
+let timer; // Timer du compte à rebours
 
-        // fonction pour afficher la question acctuelle est lancer le countdown.
-        function displayQuestion() {
-            const questionElement = document.getElementById("question");
-            const optionsElement = document.getElementById("options");
-            const countdownElement = document.getElementById("countdown");
+// Fonction pour afficher la question actuelle et lancer le compte à rebours
+function displayQuestion() {
+    const questionElement = document.getElementById("question");
+    const optionsElement = document.getElementById("options");
+    const countdownElement = document.getElementById("timer");
 
-            // Afficher la question.
-            questionElement.textContent = quiz[currentQuestion].question;
+    // Affiche la question
+    questionElement.textContent = quiz[currentQuestion].question;
 
-            // Vider l'option.
-            optionsElement.innerHTML = "";
+    // Vide les options précédentes
+    optionsElement.innerHTML = "";
 
-            // Afficher l'option.
-            quiz[currentQuestion].options.forEach((option, index) => {
-                const optionElement = document.createElement("button");
-                optionElement.textContent = option;
-                optionElement.addEventListener("click", () => {
-                    clearInterval(timer); // arreter le countdown quand une question est selectionnée.
-                    checkAnswer(option);
-                });
-                optionsElement.appendChild(optionElement);
-            });
+    // Affiche les options pour la question actuelle
+    quiz[currentQuestion].options.forEach((option) => {
+        const optionElement = document.createElement("button");
+        optionElement.textContent = option;
+        optionElement.addEventListener("click", () => {
+            clearInterval(timer); // Arrête le compte à rebours
+            verifierReponse(option);
+        });
+        optionsElement.appendChild(optionElement);
+    });
 
-            // lancer le countdown.
-            timeLeft = 5;
-            countdownElement.textContent = `Time left: ${timeLeft} seconds`;
-            const timer = setInterval(() => {
-                timeLeft--;
-                countdownElement.textContent = `Time left: ${timeLeft} seconds`;
-                if (timeLeft <= 0) {
-                    clearInterval(timer); // arreter le countdown quand le temps s'est découlé.
-                    checkAnswer(null); // aller à la question suivante.
-                }
-            }, 1000);
+    // Démarre le compte à rebours seulement après avoir affiché les options
+    let timeLeft = 5;
+    countdownElement.textContent = timeLeft;
+
+    timer = setInterval(() => {
+        timeLeft--;
+        countdownElement.textContent = timeLeft;
+        if (timeLeft === 0) {
+            clearInterval(timer);
+            verifierReponse(null); // Aucune réponse donnée (temps écoulé)
         }
+    }, 1000);
+}
 
-        // Fonction pour verifier la réponse séléctionnée.
-        function checkAnswer(selectedOption) {
-            if (selectedOption === quiz[currentQuestion].answer) {
-                score++; // Incrémenter le score si la question est correcte.
-            }
+// Vérifie la réponse sélectionnée par le joueur
+function verifierReponse(selectedOption) {
+    const answer = quiz[currentQuestion].answer;
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modal-content');
 
-            currentQuestion++; // passer à la question suivantes.
+    if (selectedOption === answer) {
+        score++; // Incrémente le score si la réponse est correcte
+        modalContent.textContent = `Bravo ! La réponse "${answer}" est correcte.`;
+    } else {
+        modalContent.textContent = `Dommage, la réponse correcte est "${answer}".`;
+    }
 
-            if (currentQuestion < quiz.length) {
-                displayQuestion(); // aller à la question suivante.
-            } else {
-                displayScore(); // Afficher le score.
-            }
+    modal.style.display = 'flex'; // Affiche la modal
+
+    setTimeout(() => {
+        modal.style.display = 'none'; // Cache la modal après quelques secondes
+        currentQuestion++; // Passe à la question suivante
+        if (currentQuestion < quiz.length) {
+            displayQuestion(); // Affiche la prochaine question
+        } else {
+            displayScore(); // Affiche le score final
         }
+    }, 2000); // Délai en millisecondes avant de passer à la question suivante
+}
 
-        // Fonction pour afficher le score
-        function displayScore() {
-            const name=localStorage.getItem("nom");
-            const prenom=localStorage.getItem("prenom");
-            const scoreElement = document.getElementById("score");
-            scoreElement.textContent =`${name} ${prenom} votre score : ${score}/${quiz.length}`;
-        }
-
-        // fonction pour lancer le quiz
-        function startQuiz() {
-            displayQuestion();
-        }
-
-    
-        window.addEventListener("load", startQuiz);
+// Démarre le quiz lorsque la page est chargée
+window.addEventListener("load", () => {
+    displayQuestion(); // Affiche la première question
+    modal.style.display = 'none'
+});
+// Fonction pour afficher le score
+function displayScore() {
+    const name=localStorage.getItem("nom");
+    const prenom=localStorage.getItem("prenom");
+    const scoreElement = document.getElementById("score");
+    scoreElement.textContent =`${name} ${prenom} votre score : ${score}/${quiz.length}`;
+}
