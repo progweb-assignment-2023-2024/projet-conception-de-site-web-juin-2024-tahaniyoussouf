@@ -94,17 +94,14 @@ window.addEventListener("load", () => {
     displayQuestion(); // Affiche la première question
     modal.style.display = 'none'
 });
+
 // Fonction pour afficher le score
 function displayScore() {
-    const name=localStorage.getItem("nom");
-    const prenom=localStorage.getItem("prenom");
+    const name = localStorage.getItem("nom"); // Retrieve 'nom' from localStorage
+    const prenom = localStorage.getItem("prenom"); // Retrieve 'prenom' from localStorage
+    
+    // Displaying the score requires a 'score' variable, which is not defined in this snippet
+    // Assuming 'score' is meant to represent the quiz score
     const scoreElement = document.getElementById("score");
-    scoreElement.textContent =`${name} ${prenom} votre score : ${score}/${quiz.length}`;
-}
-function storeData() {
-    let name = document.getElementById('nom').value;
-    let prenom = document.getElementById('prenom').value;
-    localStorage.setItem('nom', name);
-    localStorage.setItem('prenom', prenom);
-    return true;
+    scoreElement.textContent = `${name} ${prenom} votre score : ${score}/${quiz.length}`;
 }
