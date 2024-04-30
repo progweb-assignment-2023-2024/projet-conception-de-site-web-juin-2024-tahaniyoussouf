@@ -28,12 +28,13 @@ let timer; // Timer du compte à rebours
 
 // Fonction pour afficher la question actuelle et lancer le compte à rebours
 function displayQuestion() {
-    const questionElement = document.getElementById("question");
-    const optionsElement = document.getElementById("options");
-    const countdownElement = document.getElementById("timer");
+    const questionElement = document.getElementById("question"); // récupère l'élément HTML avec l'identifiant "question" dans le document et le stocke dans la variable questionElement.
+    const optionsElement = document.getElementById("options"); // récupère l'élément HTML avec l'identifiant "Option" dans le document et le stocke dans la variable questionElemen;                 
+    const countdownElement = document.getElementById("timer"); // récupère l'élément HTML avec l'identifiant "Countdown" dans le document et le stocke dans la variable questionElemen;
 
     // Affiche la question
-    questionElement.textContent = quiz[currentQuestion].question;
+    questionElement.textContent = quiz[currentQuestion].question; // récupère la question du tableau `quiz`dans l'élément HTML
+                                                                //  mettre à jour le contenu textuel de l'élément HTML représenté par questionElement avec le texte de la question actuelle du quiz.
 
     // Vide les options précédentes
     optionsElement.innerHTML = "";
@@ -43,21 +44,22 @@ function displayQuestion() {
         const optionElement = document.createElement("button");
         optionElement.textContent = option;
         optionElement.addEventListener("click", () => {
-            clearInterval(timer); // Arrête le compte à rebours
-            verifierReponse(option);
+            clearInterval(timer); // Arrête le compte à rebours quand l'option est sélectionnée.
+            verifierReponse(option); // représente l'option de réponse sélectionnée
         });
         optionsElement.appendChild(optionElement);
     });
 
     // Démarre le compte à rebours seulement après avoir affiché les options
-    let timeLeft = 5;
-    countdownElement.textContent = timeLeft;
+    let timeLeft = 5; // Durée initiale du compte à rebours en secondes
+    countdownElement.textContent = timeLeft; // Affiche le temps restant dans l'élément countdown
+
 
     timer = setInterval(() => {
         timeLeft--;
         countdownElement.textContent = timeLeft;
         if (timeLeft === 0) {
-            clearInterval(timer);
+            clearInterval(timer); // Arreter le countdown quand le temps s'écoule.
             verifierReponse(null); // Aucune réponse donnée (temps écoulé)
         }
     }, 1000);
@@ -65,15 +67,15 @@ function displayQuestion() {
 
 // Vérifie la réponse sélectionnée par le joueur
 function verifierReponse(selectedOption) {
-    const answer = quiz[currentQuestion].answer;
-    const modal = document.getElementById('modal');
-    const modalContent = document.getElementById('modal-content');
+    const answer = quiz[currentQuestion].answer; // Récupère la réponse correcte pour la question actuelle
+    const modal = document.getElementById('modal'); // Récupère l'élément modal
+    const modalContent = document.getElementById('modal-content'); // Récupère le contenu de la modal
 
     if (selectedOption === answer) {
         score++; // Incrémente le score si la réponse est correcte
         modalContent.textContent = `Bravo ! La réponse "${answer}" est correcte.`;
     } else {
-        modalContent.textContent = `Dommage, la réponse correcte est "${answer}".`;
+        modalContent.textContent = `Dommage, la réponse incorrecte est "${answer}".`;
     }
 
     modal.style.display = 'flex'; // Affiche la modal
@@ -92,16 +94,17 @@ function verifierReponse(selectedOption) {
 // Démarre le quiz lorsque la page est chargée
 window.addEventListener("load", () => {
     displayQuestion(); // Affiche la première question
-    modal.style.display = 'none'
+    modal.style.display = 'none'; //  Cache la modal au chargement de la page
 });
+
 
 // Fonction pour afficher le score
 function displayScore() {
-    const name = localStorage.getItem("nom"); // Retrieve 'nom' from localStorage
-    const prenom = localStorage.getItem("prenom"); // Retrieve 'prenom' from localStorage
+    const name = localStorage.getItem("nom"); // Récupère le nom depuis localStorage
+    const prenom = localStorage.getItem("prenom"); // Récupère le prénom depuis localStorage
     
-    // Displaying the score requires a 'score' variable, which is not defined in this snippet
-    // Assuming 'score' is meant to represent the quiz score
+    // Afficher le score nécessite une variable 'score', qui n'est pas définie dans cet extrait de code.
+    // En supposant que 'score' représente le score du quiz.
     const scoreElement = document.getElementById("score");
     scoreElement.textContent = `${name} ${prenom} votre score : ${score}/${quiz.length}`;
 }
