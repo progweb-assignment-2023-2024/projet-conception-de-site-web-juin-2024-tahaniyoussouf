@@ -1,10 +1,10 @@
 function storeData() {
-    let name = document.getElementById('nom').value; // Get value from input with id 'nom'
-    let prenom = document.getElementById('prenom').value; // Get value from input with id 'prenom'
-    
-    // Store name and prenom in localStorage
+    let name = document.getElementById('nom').value; // Obtenir la valeur de l'entrée avec l'identifiant 'nom'.
+    let prenom = document.getElementById('prenom').value; // Obtenir la valeur de l'entrée avec l'identifiant 'prenom'.
+
+    // Enregistrer le nom et le prénom dans localStorage.
     localStorage.setItem('nom', name);
     localStorage.setItem('prenom', prenom);
     
-    return true; // Return true (the purpose of this return value is not utilized here)
+    return true; // Retourne true (la valeur de retour n'est pas utilisée ici).
 }
