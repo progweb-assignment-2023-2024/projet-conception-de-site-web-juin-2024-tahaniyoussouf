@@ -33,8 +33,8 @@ function displayQuestion() {
     const countdownElement = document.getElementById("timer"); // récupère l'élément HTML avec l'identifiant "Countdown" dans le document et le stocke dans la variable questionElemen;
 
     // Affiche la question
-    questionElement.textContent = quiz[currentQuestion].question; // récupère la question du tableau `quiz`dans l'élément HTML
-                                                                //  mettre à jour le contenu textuel de l'élément HTML représenté par questionElement avec le texte de la question actuelle du quiz.
+    questionElement.textContent = quiz[currentQuestion].question;
+                                                                
 
     // Vide les options précédentes
     optionsElement.innerHTML = "";
